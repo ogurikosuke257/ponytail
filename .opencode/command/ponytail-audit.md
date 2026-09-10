@@ -1,5 +1,5 @@
 ---
-description: Audit the whole repo for over-engineering, what can be deleted
+description: リポジトリ全体を監査し、過剰設計の削除候補を出す
 ---
 
-Audit the entire repository for over-engineering only, not correctness. Scan the whole tree, not a diff. One line per finding, ranked biggest cut first: <tag> <what to cut>. <replacement>. [path]. Tags: delete (dead code/speculative feature), stdlib (reinvented standard library), native (dependency doing what the platform does), yagni (abstraction with one implementation), shrink (same logic, fewer lines). End with the net lines and dependencies removable. If nothing to cut: 'Lean already. Ship.'
+リポジトリ全体を、正しさではなく過剰設計だけの観点で監査する。差分ではなくツリー全体を走査し、大きな削減候補から1行ずつ出す。形式は<tag> <削るもの>。<置き換え>。[パス]。タグはdelete（死んだコード／推測機能）、stdlib（標準ライブラリの再実装）、native（標準機能で代替可能）、yagni（実装が1つの抽象化）、shrink（同じロジックを少ない行数で書ける）。最後に削減可能な行数と依存関係をnet: -<N> lines, -<M> deps possible.で出す。削るものがなければLean already. Ship.と出す。

@@ -1,16 +1,16 @@
-# Ponytail for Hermes installed
+# HermesへのPonytail導入後
 
-Enable it if you did not install with `--enable`:
+`--enable` なしでインストールした場合は、次で有効化します。
 
 ```bash
 hermes plugins enable ponytail
 ```
 
-Restart Hermes or the gateway after enabling.
+有効化後にHermesまたはゲートウェイを再起動してください。
 
-In shared gateways, restrict `/ponytail` to trusted users with Hermes slash-command access controls; runtime mode is process-local.
+共有ゲートウェイでは、Hermesのスラッシュコマンドアクセス制御を使い、`/ponytail` を信頼できるユーザーだけに許可してください。実行時のモードはプロセス単位です。
 
-Commands:
+コマンド：
 
 - `/ponytail [lite|full|ultra|off]`
 - `/ponytail-review [target]`
@@ -19,4 +19,4 @@ Commands:
 - `/ponytail-gain`
 - `/ponytail-help`
 
-Bundled skills are available as `ponytail:ponytail`, `ponytail:ponytail-review`, `ponytail:ponytail-audit`, `ponytail:ponytail-debt`, `ponytail:ponytail-gain`, and `ponytail:ponytail-help`.
+同梱スキルは `ponytail:ponytail`、`ponytail:ponytail-review`、`ponytail:ponytail-audit`、`ponytail:ponytail-debt`、`ponytail:ponytail-gain`、`ponytail:ponytail-help` として利用できます。

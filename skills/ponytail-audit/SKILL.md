@@ -1,41 +1,33 @@
 ---
 name: ponytail-audit
 description: >
-  Whole-repo audit for over-engineering. Like ponytail-review, but scans the
-  entire codebase instead of a diff: a ranked list of what to delete, simplify,
-  or replace with stdlib/native equivalents. Use when the user says "audit this
-  codebase", "audit for over-engineering", "what can I delete from this repo",
-  "find bloat", "ponytail-audit", or "/ponytail-audit". One-shot report, does
-  not apply fixes.
+  リポジトリ全体の過剰設計監査。ponytail-reviewと同じだが差分ではなく全コードベースを走査し、削除・単純化・標準ライブラリや標準機能への置換候補を大きい順に出す。「コードベースを監査して」「過剰設計を監査して」「何を削除できるか」「無駄を探して」「ponytail-audit」または /ponytail-audit で使う。1回限りの報告で、修正はしない。
 ---
 
-ponytail-review, repo-wide. Scan the whole tree instead of a diff. Rank
-findings biggest cut first.
+リポジトリ全体に対するponytail-reviewです。差分ではなくツリー全体を走査し、削減効果が大きい順に並べます。
 
-## Tags
+## タグ
 
-Same as ponytail-review:
+ponytail-reviewと同じです。
 
-- `delete:` dead code, unused flexibility, speculative feature. Replacement: nothing.
-- `stdlib:` hand-rolled thing the standard library ships. Name the function.
-- `native:` dependency or code doing what the platform already does. Name the feature.
-- `yagni:` abstraction with one implementation, config nobody sets, layer with one caller.
-- `shrink:` same logic, fewer lines. Show the shorter form.
+- `delete:` 死んだコード、未使用の柔軟性、推測による機能。置き換えはなし。
+- `stdlib:` 標準ライブラリにあるものを自作している。関数名を示す。
+- `native:` 標準機能でできることを依存関係やコードで実装している。機能名を示す。
+- `yagni:` 実装が1つしかない抽象化、誰も設定しない設定、呼び出し元が1つの層。
+- `shrink:` 同じロジックを少ない行数で書ける。短い形を示す。
 
-## Hunt
+## 探すもの
 
-Deps the stdlib or platform already ships, single-implementation interfaces,
-factories with one product, wrappers that only delegate, files exporting one
-thing, dead flags and config, hand-rolled stdlib.
+標準ライブラリやプラットフォームにあるもの、実装が1つだけのインターフェース、製品が1つだけのファクトリ、委譲しかしていないラッパー、1つしか公開しないファイル、死んだフラグや設定、自作の標準ライブラリ相当処理を探します。
 
-## Output
+## 出力
 
-One line per finding, ranked: `<tag> <what to cut>. <replacement>. [path]`.
-End with `net: -<N> lines, -<M> deps possible.` Nothing to cut: `Lean already. Ship.`
+指摘は大きい順に1行ずつ出します：`<タグ> <削るもの>。<置き換え>。[パス]`。
 
-## Boundaries
+最後に `net: -<N> lines, -<M> deps possible.` を出します。何もなければ `Lean already. Ship.` と出します。
 
-Scope: over-engineering and complexity only. Correctness bugs, security holes,
-and performance are explicitly out of scope. Route them to a normal review
-pass. Lists findings, applies nothing. One-shot.
-"stop ponytail-audit" or "normal mode" to revert.
+## 境界
+
+対象は過剰設計と複雑さだけです。正しさのバグ、セキュリティホール、性能問題は対象外なので、通常のレビューへ回します。指摘だけを出し、修正はしません。1回限りの実行です。
+
+`stop ponytail-audit` または `normal mode` で元に戻ります。

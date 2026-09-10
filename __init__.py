@@ -12,11 +12,11 @@ DEFAULT_MODE = "full"
 RUNTIME_MODES = {"off", "lite", "full", "ultra"}
 CONFIG_MODES = RUNTIME_MODES | {"review"}
 SKILL_COMMANDS = {
-    "ponytail-review": "Review the current diff or provided target for over-engineering.",
-    "ponytail-audit": "Audit the repo for over-engineering and deletion opportunities.",
-    "ponytail-debt": "List every deliberate `ponytail:` shortcut and its upgrade path.",
-    "ponytail-gain": "Show the measured-impact scoreboard (less code, less cost, more speed).",
-    "ponytail-help": "Show the Ponytail command reference.",
+    "ponytail-review": "現在の差分または指定された対象を過剰設計の観点でレビューする。",
+    "ponytail-audit": "リポジトリを過剰設計と削除候補の観点で監査する。",
+    "ponytail-debt": "意図的な `ponytail:` ショートカットと改善条件をすべて一覧にする。",
+    "ponytail-gain": "測定済み効果のスコアボード（コード量、コスト、速度）を表示する。",
+    "ponytail-help": "Ponytailのコマンドリファレンスを表示する。",
 }
 
 ROOT = Path(__file__).resolve().parent
@@ -90,15 +90,12 @@ def _filter_skill_body_for_mode(body: str, mode: str) -> str:
 def _fallback_instructions(mode: str) -> str:
     return (
         f"PONYTAIL MODE ACTIVE — level: {mode}\n\n"
-        "You are a lazy senior developer. Lazy means efficient, not careless. "
-        "The best code is the code never written.\n\n"
-        "Before any code, stop at the first rung that holds: YAGNI, stdlib, "
-        "native platform, installed dependency, one line, then minimum code. "
-        "No unrequested abstractions, avoidable dependencies, boilerplate, or "
-        "speculative scaffolding. Deletion over addition. Boring over clever. "
-        "Do not simplify away trust-boundary validation, data-loss handling, "
-        "security, accessibility, explicitly requested behavior, or one small "
-        "runnable check for non-trivial logic."
+        "あなたは怠惰なシニア開発者です。怠惰とは無責任ではなく効率的であることです。 "
+        "書かずに済むコードが、最良のコードです。\n\n"
+        "コードを書く前に、YAGNI、標準ライブラリ、プラットフォーム標準機能、導入済み依存関係、1行、最小実装の順で最初に成立する段階に止まります。 "
+        "要求されていない抽象化、避けられる依存関係、ボイラープレート、推測による足場を追加しません。 "
+        "追加より削除、賢さより退屈さを選びます。 "
+        "信頼境界の入力検証、データ損失を防ぐ処理、セキュリティ、アクセシビリティ、明示的に要求された動作、非自明なロジックの実行可能なチェック1つは簡略化しません。"
     )
 
 
@@ -112,7 +109,7 @@ def build_injected_context(mode: str | None = None) -> str:
             body = REVIEW_SKILL.read_text(encoding="utf-8")
             return f"PONYTAIL MODE ACTIVE — level: review\n\n{_strip_frontmatter(body)}"
         except OSError:
-            return "PONYTAIL MODE ACTIVE — level: review. Review diffs for unnecessary complexity."
+            return "PONYTAIL MODE ACTIVE — level: review。不要な複雑さがないか差分をレビューします。"
 
     effective = _normalize_runtime_mode(configured) or DEFAULT_MODE
     try:
@@ -132,7 +129,7 @@ def _skill_prompt(command: str, args: str = "") -> str:
     tail = args.strip()
     target = f"\n\nUser arguments: {tail}" if tail else ""
     return (
-        f"Load and follow the Hermes plugin skill `ponytail:{command}`. "
+        f"Hermesプラグインのスキル `ponytail:{command}` を読み、従ってください。"
         f"{SKILL_COMMANDS[command]}{target}"
     )
 
@@ -169,12 +166,12 @@ def _handle_mode_command(raw_args: str) -> str:
     arg = (raw_args or "").strip().lower()
     if not arg:
         mode = _current_mode or _default_mode()
-        return f"Ponytail mode: {mode}. Use `/ponytail lite|full|ultra|off`."
+        return f"Ponytailモード: {mode}。`/ponytail lite|full|ultra|off` を使います。"
     mode = _normalize_runtime_mode(arg)
     if not mode:
-        return "Usage: /ponytail [lite|full|ultra|off]"
+        return "使い方: /ponytail [lite|full|ultra|off]"
     _current_mode = mode
-    return f"Ponytail mode set to {mode}."
+    return f"Ponytailモードを {mode} に設定しました。"
 
 
 def _make_skill_command_handler(ctx: Any, command: str) -> Callable[[str], str]:
@@ -186,7 +183,7 @@ def _make_skill_command_handler(ctx: Any, command: str) -> Callable[[str], str]:
         except Exception:
             injected = False
         if injected:
-            return f"Queued `{command}` for the agent."
+            return f"`{command}` をエージェントへキューに追加しました。"
         return prompt
 
     return handler
@@ -205,7 +202,7 @@ def register(ctx: Any) -> None:
     ctx.register_command(
         "ponytail",
         _handle_mode_command,
-        description="Set Ponytail lazy senior dev mode: lite, full, ultra, or off.",
+        description="Ponytailの怠惰なシニア開発者モードを設定する（lite、full、ultra、off）。",
         args_hint="[lite|full|ultra|off]",
     )
     for command, description in SKILL_COMMANDS.items():

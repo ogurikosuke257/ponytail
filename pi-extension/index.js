@@ -19,7 +19,7 @@ export const readDefaultMode = getDefaultMode;
 export const readQuietStartup = getQuietStartup;
 
 const RUNTIME_MODE_LIST = RUNTIME_MODES.join("|");
-const PONYTAIL_COMMAND_DESCRIPTION = `Set mode: ${RUNTIME_MODE_LIST}. Commands: status, default <mode>`;
+const PONYTAIL_COMMAND_DESCRIPTION = `モードを設定: ${RUNTIME_MODE_LIST}。コマンド: status、default <mode>`;
 
 export function resolveSessionMode(entries, fallbackMode = DEFAULT_MODE) {
   const fallback = normalizePersistedMode(fallbackMode) || DEFAULT_MODE;
@@ -95,7 +95,7 @@ export default function ponytailExtension(pi) {
     currentMode = normalized;
     pi.appendEntry("ponytail-mode", { mode: normalized });
     syncStatus(ctx);
-    ctx?.ui?.notify?.(`Ponytail mode set to ${normalized}.`, "info");
+    ctx?.ui?.notify?.(`Ponytailモードを ${normalized} に設定しました。`, "info");
   };
 
   const sendAlias = (skillName, args, ctx) => {
@@ -104,7 +104,7 @@ export default function ponytailExtension(pi) {
 
     if (ctx?.isIdle?.() === false) {
       pi.sendUserMessage(message, { deliverAs: "followUp" });
-      ctx?.ui?.notify?.(`${skillName} queued as follow-up.`, "info");
+      ctx?.ui?.notify?.(`${skillName} をフォローアップとしてキューに追加しました。`, "info");
       return;
     }
 
@@ -117,7 +117,7 @@ export default function ponytailExtension(pi) {
       const parsed = parsePonytailCommand(args, configuredDefaultMode);
 
       if (parsed.type === "status") {
-        ctx?.ui?.notify?.(`Ponytail: current ${currentMode} • default ${configuredDefaultMode}`, "info");
+        ctx?.ui?.notify?.(`Ponytail: 現在 ${currentMode} • 既定 ${configuredDefaultMode}`, "info");
         return;
       }
 
@@ -127,12 +127,12 @@ export default function ponytailExtension(pi) {
           if (written) {
             configuredDefaultMode = getDefaultMode();
             const message = configuredDefaultMode === written
-              ? `Default Ponytail mode set to ${written}.`
-              : `Saved default ${written}, but env override keeps default at ${configuredDefaultMode}.`;
+              ? `Ponytailの既定モードを ${written} に設定しました。`
+              : `既定値 ${written} を保存しましたが、環境変数により既定値は ${configuredDefaultMode} のままです。`;
             ctx?.ui?.notify?.(message, "info");
           }
         } catch (e) {
-          ctx?.ui?.notify?.(`Failed to save default mode: ${e.message}`, "error");
+          ctx?.ui?.notify?.(`既定モードの保存に失敗しました: ${e.message}`, "error");
         }
         return;
       }
@@ -142,32 +142,32 @@ export default function ponytailExtension(pi) {
         return;
       }
 
-      ctx?.ui?.notify?.("Unknown or unsupported /ponytail mode.", "warning");
+      ctx?.ui?.notify?.("未知または未対応の /ponytail モードです。", "warning");
     },
   });
 
   pi.registerCommand("ponytail-review", {
-    description: "Run /skill:ponytail-review",
+    description: "/skill:ponytail-review を実行",
     handler: (_args, ctx) => sendAlias("/skill:ponytail-review", "", ctx),
   });
 
   pi.registerCommand("ponytail-audit", {
-    description: "Run /skill:ponytail-audit",
+    description: "/skill:ponytail-audit を実行",
     handler: (_args, ctx) => sendAlias("/skill:ponytail-audit", "", ctx),
   });
 
   pi.registerCommand("ponytail-gain", {
-    description: "Run /skill:ponytail-gain",
+    description: "/skill:ponytail-gain を実行",
     handler: (_args, ctx) => sendAlias("/skill:ponytail-gain", "", ctx),
   });
 
   pi.registerCommand("ponytail-debt", {
-    description: "Run /skill:ponytail-debt",
+    description: "/skill:ponytail-debt を実行",
     handler: (_args, ctx) => sendAlias("/skill:ponytail-debt", "", ctx),
   });
 
   pi.registerCommand("ponytail-help", {
-    description: "Run /skill:ponytail-help",
+    description: "/skill:ponytail-help を実行",
     handler: (_args, ctx) => sendAlias("/skill:ponytail-help", "", ctx),
   });
 
@@ -187,7 +187,7 @@ export default function ponytailExtension(pi) {
     currentMode = resolveSessionMode(entries, configuredDefaultMode);
     syncStatus(ctx);
     if (!getQuietStartup()) {
-      ctx?.ui?.notify?.(`Ponytail loaded: ${currentMode}`, "info");
+      ctx?.ui?.notify?.(`Ponytailを読み込みました: ${currentMode}`, "info");
     }
   });
 

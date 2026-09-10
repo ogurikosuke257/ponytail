@@ -1,46 +1,34 @@
 # ponytail-mcp
 
-An MCP server that serves Ponytail's lazy-senior-dev instructions. It exposes
-the same ruleset the Claude hooks and Pi extension use, so every host emits
-identical rules.
+Ponytailの怠惰なシニア開発者指示を提供するMCPサーバーです。Claude hooksやPi拡張と同じルールを使うため、どのホストでも同じ内容を出力します。
 
-It is not a replacement for the always-on adapters. Ponytail normally lives in
-the system context every turn. MCP prompts are user-invoked, and there is no
-portable MCP primitive for "inject this into every turn" across hosts. So this
-server is the clean option for MCP hosts whose only injection point is the
-prompt menu, or that pull context through tools. See issue #70.
+常時有効なアダプターの代替ではありません。Ponytailは通常、毎ターンのシステムコンテキストに入ります。MCPのプロンプトはユーザーが呼び出すもので、すべてのホストに共通する「毎ターン注入」のMCPプリミティブはありません。そのため、プロンプトメニューだけが注入点のホストや、ツール経由でコンテキストを取得するホスト向けの選択肢です。
 
-## What it exposes
+## 提供するもの
 
-- Prompt `ponytail`, returns the ruleset as a user message. Optional `mode`
-  argument: `lite`, `full`, or `ultra`. Omit it to use the configured default.
-- Tool `ponytail_instructions`, same text, plus `structuredContent`
-  (`{ mode, instructions }`), for hosts that pull context via tools or code
-  execution. Read-only.
+- `ponytail` プロンプト：ルールをユーザーメッセージとして返します。`mode` は任意で、`lite`、`full`、`ultra` を指定できます。省略すると設定済みの既定値を使います。
+- `ponytail_instructions` ツール：同じテキストを返し、ツールやコード実行から扱える `structuredContent`（`{ mode, instructions }`）も返します。読み取り専用です。
 
-Mode resolution reuses `hooks/ponytail-config.js`, so `PONYTAIL_DEFAULT_MODE`
-and `~/.config/ponytail/config.json` work the same as everywhere else.
+モード解決は `hooks/ponytail-config.js` を再利用します。`PONYTAIL_DEFAULT_MODE` と `~/.config/ponytail/config.json` は他のアダプターと同じように使えます。
 
-## Run it
+## 起動
 
 ```bash
 cd ponytail-mcp
 npm install
-node index.js        # speaks MCP over stdio
+node index.js        # stdioでMCPを提供
 ```
 
-Point an MCP host at that command. Example client entry:
+MCPホストからこのコマンドを指定します。クライアント設定の例：
 
 ```json
 { "mcpServers": { "ponytail": { "command": "node", "args": ["ponytail-mcp/index.js"] } } }
 ```
 
-## Test
+## テスト
 
 ```bash
 npm test
 ```
 
-Covers mode resolution and the instruction text. The MCP wiring in `index.js`
-is intentionally thin: it just maps the prompt and tool onto
-`buildInstructions`.
+モード解決と指示文を検証します。`index.js` のMCP配線は意図的に薄く、プロンプトとツールを `buildInstructions` に接続するだけです。
