@@ -17,12 +17,12 @@ const ROOT = path.join(__dirname, '..');
 const HOMEPAGE = 'https://github.com/DietrichGebert/ponytail';
 
 const DESCRIPTIONS = {
-  'ponytail': 'Lazy senior dev mode for any coding task (write, refactor, fix, review): YAGNI, stdlib first, no unrequested abstractions. Not for non-coding requests.',
-  'ponytail-review': 'Review a diff for over-engineering. Finds what to delete: reinvented stdlib, needless deps, speculative abstractions. One line per finding.',
-  'ponytail-audit': 'Audit the whole repo for over-engineering. A ranked list of what to delete, simplify, or replace with stdlib or native features.',
-  'ponytail-debt': 'Harvest every ponytail: shortcut comment into one debt ledger, so deferrals get tracked instead of forgotten. One-shot report.',
-  'ponytail-gain': 'Show ponytail measured impact as a scoreboard: less code, less cost, more speed, from the benchmark medians. One-shot display.',
-  'ponytail-help': "Quick reference for ponytail's modes, skills, and commands. One-shot display.",
+  'ponytail': '任意のコーディングタスクで最小実装を選ぶ日本語モード。YAGNI、標準ライブラリ、標準機能を優先し、不要な抽象化を避ける。',
+  'ponytail-review': '差分を過剰設計の観点でレビューし、削除・標準化できるものを指摘する。1行1指摘。',
+  'ponytail-audit': 'リポジトリ全体を過剰設計の観点で監査し、削除・単純化候補を大きい順に出す。',
+  'ponytail-debt': 'ponytail:ショートカットコメントを負債台帳へ集め、先送りを追跡する。1回限りの報告。',
+  'ponytail-gain': 'ベンチマーク中央値からコード量・コスト・速度の効果をスコアボードで表示する。',
+  'ponytail-help': 'Ponytailのモード、スキル、コマンドのクイックリファレンスを表示する。',
 };
 
 const NAMES = Object.keys(DESCRIPTIONS);

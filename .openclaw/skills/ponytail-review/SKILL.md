@@ -1,52 +1,46 @@
 ---
 name: ponytail-review
-description: "Review a diff for over-engineering. Finds what to delete: reinvented stdlib, needless deps, speculative abstractions. One line per finding."
+description: "差分を過剰設計の観点でレビューし、削除・標準化できるものを指摘する。1行1指摘。"
 homepage: https://github.com/DietrichGebert/ponytail
 license: MIT
 ---
 
-Review diffs for unnecessary complexity. One line per finding: location, what
-to cut, what replaces it. The diff's best outcome is getting shorter.
+不要な複雑さがないか差分をレビューします。各指摘は1行で、場所、削るもの、置き換えを示します。最良の差分は短くなった差分です。
 
-## Format
+## 形式
 
-`L<line>: <tag> <what>. <replacement>.`, or `<file>:L<line>: ...` for
-multi-file diffs.
+`L<行>: <タグ> <削るもの>。<置き換え>。`、複数ファイルなら `<ファイル>:L<行>: ...`。
 
-Tags:
+タグは安定した機械判定用のため英語のままにします。
 
-- `delete:` dead code, unused flexibility, speculative feature. Replacement: nothing.
-- `stdlib:` hand-rolled thing the standard library ships. Name the function.
-- `native:` dependency or code doing what the platform already does. Name the feature.
-- `yagni:` abstraction with one implementation, config nobody sets, layer with one caller.
-- `shrink:` same logic, fewer lines. Show the shorter form.
+- `delete:` 死んだコード、未使用の柔軟性、推測による機能。置き換えはなし。
+- `stdlib:` 標準ライブラリにあるものを自作している。関数名を示す。
+- `native:` プラットフォーム標準機能でできることを依存関係やコードで実装している。機能名を示す。
+- `yagni:` 実装が1つしかない抽象化、誰も設定しない設定、呼び出し元が1つの層。
+- `shrink:` 同じロジックを少ない行数で書ける。短い形を示す。
 
-## Examples
+## 例
 
-❌ "This EmailValidator class might be more complex than necessary, have you
-considered whether all these validation rules are needed at this stage?"
+❌ 「このEmailValidatorクラスは不要に複雑かもしれません。今の段階でこの検証ルールがすべて必要か検討してはどうでしょうか」
 
-✅ `L12-38: stdlib: 27-line validator class. "@" in email, 1 line, real validation is the confirmation mail.`
+✅ `L12-38: stdlib: 27行のバリデータクラス。メールの実在確認は「@」1行ではなく、確認メールに任せる。`
 
-✅ `L4: native: moment.js imported for one format call. Intl.DateTimeFormat, 0 deps.`
+✅ `L4: native: 1回の書式化のためにmoment.jsを読み込んでいる。Intl.DateTimeFormat、依存関係0。`
 
-✅ `repo.py:L88: yagni: AbstractRepository with one implementation. Inline it until a second one exists.`
+✅ `repo.py:L88: yagni: 実装が1つだけのAbstractRepository。2つ目が必要になるまでインライン化する。`
 
-✅ `L52-71: delete: retry wrapper around an idempotent local call. Nothing replaces it.`
+✅ `L52-71: delete: 冪等なローカル呼び出しを包むリトライ。置き換え不要。`
 
-✅ `L30-44: shrink: manual loop builds dict. dict(zip(keys, values)), 1 line.`
+✅ `L30-44: shrink: 手動ループで辞書を作っている。dict(zip(keys, values))、1行。`
 
-## Scoring
+## 評価
 
-End with the only metric that matters: `net: -<N> lines possible.`
+最後に重要な指標だけを `net: -<N> lines possible.` 形式で出します。
 
-If there is nothing to cut, say `Lean already. Ship.` and stop.
+削れるものがなければ `Lean already. Ship.` とだけ言って終了します。
 
-## Boundaries
+## 境界
 
-Scope: over-engineering and complexity only. Correctness bugs, security holes,
-and performance are explicitly out of scope. Route them to a normal review
-pass, not this one. A single smoke test or `assert`-based
-self-check is the ponytail minimum, not bloat, never flag it for deletion.
-Does not apply the fixes, only lists them.
-"stop ponytail-review" or "normal mode": revert to verbose review style.
+対象は過剰設計と複雑さだけです。正しさのバグ、セキュリティホール、性能問題は対象外なので、通常のレビューへ回します。スモークテスト1つまたはassertベースのセルフチェック1つはPonytailの最低限であり、削除対象ではありません。修正は行わず、指摘だけを列挙します。
+
+`stop ponytail-review` または `normal mode` で通常の詳しいレビューへ戻ります。

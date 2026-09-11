@@ -107,7 +107,7 @@ print(json.dumps({'ctx': ctx}))
   const { ctx } = JSON.parse(output);
 
   assert.match(ctx, /PONYTAIL MODE ACTIVE — level: ultra/);
-  assert.match(ctx, /The best\s+code is the code never written/);
+  assert.match(ctx, /書かずに済むコードが、最良のコードです/);
   assert.match(ctx, /ultra/i);
   assert.doesNotMatch(ctx, /^---/);
   assert.doesNotMatch(ctx, /\|\s*\*\*Lite\*\*/i);
@@ -144,9 +144,9 @@ print(json.dumps({
   const data = JSON.parse(output);
   assert.match(data.default, /level: ultra/);
   assert.equal(data.off, '');
-  assert.match(data.status_before, /Ponytail mode: ultra/);
-  assert.match(data.invalid, /Usage:/);
-  assert.match(data.status_after, /Ponytail mode: ultra/);
+  assert.match(data.status_before, /Ponytailモード: ultra/);
+  assert.match(data.invalid, /使い方:/);
+  assert.match(data.status_after, /Ponytailモード: ultra/);
 });
 
 test('Hermes plugin review mode injects the real review skill body', () => {
@@ -160,7 +160,7 @@ print(json.dumps({'ctx': ctx}))
 `);
   const { ctx } = JSON.parse(output);
   assert.match(ctx, /PONYTAIL MODE ACTIVE — level: review/);
-  assert.match(ctx, /Review diffs for unnecessary complexity/);
+  assert.match(ctx, /不要な複雑さがないか差分をレビュー/);
   assert.match(ctx, /net: -<N> lines possible/);
   assert.doesNotMatch(ctx, /^---/);
 });

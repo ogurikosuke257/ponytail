@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-// Ponytail MCP server: serves the lazy-senior-dev ruleset over stdio as a
-// prompt (user-invoked) and a tool (for hosts that pull context via tools).
-// It does NOT replace the always-on adapters; it's the clean option for hosts
-// whose only injection point is the prompt menu (see #70).
+// Ponytail MCPサーバー: 怠惰なシニア開発者ルールをstdio経由で
+// プロンプト（ユーザー起動）とツール（ツール経由でコンテキストを取得するホスト向け）として提供する。
+// 常時有効なアダプターの代替ではなく、プロンプトメニューだけが注入点のホスト向けの選択肢。
 import fs from "node:fs";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
@@ -24,7 +23,7 @@ server.registerPrompt(
   "ponytail",
   {
     title: "Ponytail mode",
-    description: "Lazy senior dev instructions: YAGNI, stdlib first, the smallest correct change.",
+    description: "怠惰なシニア開発者の指示: YAGNI、標準ライブラリ優先、動く最小の変更。",
     argsSchema: { mode: modeArg },
   },
   ({ mode }) => ({
@@ -36,7 +35,7 @@ server.registerTool(
   "ponytail_instructions",
   {
     title: "Ponytail instructions",
-    description: "Return the Ponytail ruleset for the given intensity (lite, full, or ultra).",
+    description: "指定された強度（lite、full、ultra）のPonytailルールを返す。",
     inputSchema: { mode: modeArg },
     outputSchema: { mode: z.string(), instructions: z.string() },
     annotations: { readOnlyHint: true, openWorldHint: false },

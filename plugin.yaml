@@ -1,6 +1,6 @@
 name: ponytail
 version: 4.9.0
-description: Lazy senior dev mode for Hermes Agent, always-on context, bundled skills, and slash commands.
+description: Hermes Agent向けの日本語・怠惰なシニア開発者モード。常時コンテキスト、同梱スキル、スラッシュコマンドを提供する。
 author: Dietrich Gebert
 provides_hooks:
   - pre_llm_call

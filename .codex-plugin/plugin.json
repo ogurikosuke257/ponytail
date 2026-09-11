@@ -1,7 +1,7 @@
 {
   "name": "ponytail",
   "version": "4.9.0",
-  "description": "Lazy senior dev mode. Forces the simplest, shortest solution that actually works: YAGNI, stdlib first, no unrequested abstractions.",
+  "description": "日本語の怠惰なシニア開発者モード。YAGNI、標準ライブラリ、標準機能を優先し、実際に動く最短の解決策を選ぶ。",
   "author": {
     "name": "Dietrich Gebert",
     "url": "https://github.com/DietrichGebert"
@@ -14,16 +14,16 @@
   "hooks": "./hooks/claude-codex-hooks.json",
   "interface": {
     "displayName": "Ponytail",
-    "shortDescription": "Lazy senior developer mode",
-    "longDescription": "Prefer YAGNI, the standard library, native platform features, and the smallest correct implementation.",
+    "shortDescription": "日本語の怠惰なシニア開発者モード",
+    "longDescription": "YAGNI、標準ライブラリ、プラットフォーム標準機能、動く最小実装を優先する。",
     "developerName": "Dietrich Gebert",
     "category": "Productivity",
     "capabilities": ["Instructions", "Lifecycle hooks"],
     "websiteURL": "https://github.com/DietrichGebert/ponytail",
     "defaultPrompt": [
-      "Use Ponytail mode for this task.",
-      "Review this diff for over-engineering.",
-      "Find the smallest correct implementation."
+      "このタスクでPonytailモードを使う。",
+      "この差分を過剰設計の観点でレビューする。",
+      "動く最小実装を探す。"
     ],
     "brandColor": "#111111",
     "composerIcon": "./assets/logo.png",

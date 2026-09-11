@@ -1,5 +1,5 @@
 ---
-description: Review changes for over-engineering, what can be deleted
+description: 変更の過剰設計をレビューし、削除候補を出す
 ---
 
-Review the current code changes for over-engineering only, not correctness. One line per finding: L<line>: <tag> <what to cut>. <replacement>. Tags: delete (dead code/speculative feature), stdlib (reinvented standard library), native (dependency doing what the platform does), yagni (abstraction with one implementation), shrink (same logic, fewer lines). End with the net lines removable. If nothing to cut: 'Lean already. Ship.'
+現在のコード変更を、正しさではなく過剰設計だけの観点でレビューする。指摘は1行ずつ、L<行>: <タグ> <削るもの>。<置き換え>。の形式にする。タグはdelete（死んだコード／推測機能）、stdlib（標準ライブラリの再実装）、native（標準機能で代替可能）、yagni（実装が1つの抽象化）、shrink（同じロジックを少ない行数で書ける）。最後に削減可能な行数をnet: -<N> lines possible.で出す。削るものがなければLean already. Ship.と出す。

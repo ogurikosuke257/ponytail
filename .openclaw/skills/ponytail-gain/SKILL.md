@@ -1,47 +1,39 @@
 ---
 name: ponytail-gain
-description: "Show ponytail measured impact as a scoreboard: less code, less cost, more speed, from the benchmark medians. One-shot display."
+description: "ベンチマーク中央値からコード量・コスト・速度の効果をスコアボードで表示する。"
 homepage: https://github.com/DietrichGebert/ponytail
 license: MIT
 ---
 
 # Ponytail Gain
 
-Display this scoreboard when invoked. One-shot: do NOT change mode, write flag
-files, or persist anything.
+呼び出されたらこのスコアボードを表示します。1回限りです。モード変更、フラグファイルへの書き込み、永続化は **絶対にしません**。
 
-The figures are the published benchmark medians (5 everyday tasks: email
-validator, debounce, CSV sum, countdown timer, rate limiter; three models:
-Haiku, Sonnet, Opus). They are measured, not computed from the current repo.
-Source: `benchmarks/` and the README.
+数値は公開済みベンチマークの中央値です（メールバリデータ、デバウンス、CSV合計、カウントダウン、レート制限の5タスク。Haiku、Sonnet、Opusの3モデル）。現在のリポジトリから計算した値ではありません。出典は `benchmarks/` とREADMEです。
 
-## Scoreboard
+## スコアボード
 
-Render plain ASCII bars. The bar length shows the measured range; the label
-carries the exact figure:
+ASCIIバーで表示します。バーの長さは測定範囲、ラベルは正確な数値を示します。
 
 ```
-  ponytail gain                     benchmark median · 5 tasks · 3 models
+  ponytail gain                     ベンチマーク中央値・5タスク・3モデル
 
-  Lines of code   no-skill  ████████████████████  100%
-                  ponytail  ██▌·················    6–20%   ▼ 80–94%
-  Cost            no-skill  ████████████████████  100%
-                  ponytail  █████▌··············   23–53%  ▼ 47–77%
-  Speed           ponytail  ▸ 3–6× faster
+  コード行数        no-skill  ████████████████████  100%
+                    ponytail  ██▌·················    6–20%   ▼ 80–94%
+  コスト            no-skill  ████████████████████  100%
+                    ponytail  █████▌··············   23–53%  ▼ 47–77%
+  速度              ponytail  ▸ 3–6倍 高速
 
-  This repo:  /ponytail-debt  (shortcuts you deferred)
-              /ponytail-audit (what's still cuttable)
+  このリポジトリ:  /ponytail-debt  （先送りしたショートカット）
+                    /ponytail-audit （まだ削れるもの）
 ```
 
-## Honesty boundary
+## 正直さの境界
 
-These are benchmark medians, not this repo. NEVER print a per-repo savings
-number ("you saved X lines/tokens here"): the unbuilt version was never
-written, so there is no real baseline to subtract from in a live repo. The
-only real per-repo figures come from `/ponytail-debt` (a counted ledger), and
-this card points there instead of inventing one.
+数値はベンチマークの中央値であり、このリポジトリの実績ではありません。未実装版は書かれていないため、「ここでX行節約した」といったリポジトリ単位の節約量を **絶対に出さないでください**。実際に数えられるリポジトリ単位の値は `/ponytail-debt` の台帳だけです。架空のベースラインを作らず、このカードから台帳へ案内します。
 
-## Boundaries
+## 境界
 
-One-shot display. Edits nothing, changes no mode.
-"stop ponytail" or "normal mode": revert.
+1回限りの表示です。編集せず、モードも変更しません。
+
+`stop ponytail` または `normal mode` で元に戻ります。

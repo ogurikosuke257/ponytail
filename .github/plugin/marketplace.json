@@ -1,6 +1,6 @@
 {
   "name": "ponytail",
-  "description": "Lazy senior dev mode for AI agents. The best code is the code you never wrote.",
+  "description": "AIエージェント向けの日本語・怠惰なシニア開発者モード。書かずに済むコードが最良のコード。",
   "owner": {
     "name": "Dietrich Gebert",
     "url": "https://github.com/DietrichGebert"
@@ -8,7 +8,7 @@
   "plugins": [
     {
       "name": "ponytail",
-      "description": "Forces the laziest solution that works. YAGNI, stdlib first, one line over fifty.",
+      "description": "動く最小の解決策を選ぶ。YAGNI、標準ライブラリ、1行を50行より優先する。",
       "source": "./",
       "category": "productivity",
       "tags": ["yagni", "minimalism", "code-review", "productivity"],

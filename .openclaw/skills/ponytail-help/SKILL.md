@@ -1,70 +1,67 @@
 ---
 name: ponytail-help
-description: "Quick reference for ponytail's modes, skills, and commands. One-shot display."
+description: "Ponytailのモード、スキル、コマンドのクイックリファレンスを表示する。"
 homepage: https://github.com/DietrichGebert/ponytail
 license: MIT
 ---
 
-# Ponytail Help
+# Ponytail ヘルプ
 
-Display this reference card when invoked. One-shot, do NOT change mode,
-write flag files, or persist anything.
+呼び出されたらこのリファレンスカードを表示します。1回限りです。モード変更、フラグファイルへの書き込み、永続化は **絶対にしません**。
 
-## Levels
+## レベル
 
-| Level | Trigger | What change |
-|-------|---------|-------------|
-| **Lite** | `/ponytail lite` | Build what's asked, name the lazier alternative in one line. |
-| **Full** | `/ponytail` | The ladder enforced: YAGNI → stdlib → native → one line → minimum. Default. |
-| **Ultra** | `/ponytail ultra` | YAGNI extremist. Deletion before addition. Challenges requirements before building. |
+| レベル | 起動方法 | 変更内容 |
+|-------|---------|---------|
+| **Lite** | `/ponytail lite` | 要求されたものを作り、1行でより怠惰な代替案を示す。 |
+| **Full** | `/ponytail` | YAGNI → 標準ライブラリ → 標準機能 → 1行 → 最小実装の段階表を適用する。既定値。 |
+| **Ultra** | `/ponytail ultra` | YAGNIを徹底し、追加より削除を優先する。作る前に要件へ問いを返す。 |
 
-Level sticks until changed or session end.
+レベルは変更またはセッション終了まで維持します。
 
-## Skills
+## スキル
 
-| Skill | Trigger | What it does |
-|-------|---------|--------------|
-| **ponytail** | `/ponytail` | Lazy mode itself. Simplest solution that works. |
-| **ponytail-review** | `/ponytail-review` | Over-engineering review: `L42: yagni: factory, one product. Inline.` |
-| **ponytail-audit** | `/ponytail-audit` | Whole-repo over-engineering audit: ranked list of what to delete. |
-| **ponytail-debt** | `/ponytail-debt` | Harvest `ponytail:` shortcut comments into a tracked ledger. |
-| **ponytail-gain** | `/ponytail-gain` | Measured-impact scoreboard: less code, less cost, more speed. |
-| **ponytail-help** | `/ponytail-help` | This card. |
+| スキル | 起動方法 | 内容 |
+|--------|---------|------|
+| **ponytail** | `/ponytail` | Ponytail本体。動く最小の解決策を選ぶ。 |
+| **ponytail-review** | `/ponytail-review` | 過剰設計レビュー。`L42: yagni: ファクトリ、製品1つ。インライン化。` |
+| **ponytail-audit** | `/ponytail-audit` | リポジトリ全体の過剰設計監査。削除候補を大きい順に出す。 |
+| **ponytail-debt** | `/ponytail-debt` | `ponytail:` ショートカットコメントを台帳へ集める。 |
+| **ponytail-gain** | `/ponytail-gain` | 測定済み効果のスコアボード。コード量、コスト、速度を表示する。 |
+| **ponytail-help** | `/ponytail-help` | このカード。 |
 
-Codex uses `@ponytail`, `@ponytail-review`, and `@ponytail-help`; Claude Code
-and OpenCode use the slash-command forms above (OpenCode ships all six as
-slash commands).
+Codexでは `@ponytail`、`@ponytail-review`、`@ponytail-help` を使います。Claude CodeとOpenCodeでは上記のスラッシュコマンドを使います（OpenCodeは6つすべてを提供します）。
 
-## Deactivate
+## 無効化
 
-Say "stop ponytail" or "normal mode". Resume anytime with `/ponytail`.
-`/ponytail off` also works.
+`stop ponytail` または `normal mode` と言ってください。`/ponytail` でいつでも再開できます。`/ponytail off` でも無効化できます。
 
-## Configure Default Mode
+## 既定レベルの設定
 
-Default mode = `full`, auto-active every session. Change it:
+既定値は `full` で、毎セッション自動的に有効になります。変更方法は次のとおりです。
 
-**Environment variable** (highest priority):
+**環境変数**（最優先）：
+
 ```bash
 export PONYTAIL_DEFAULT_MODE=ultra
 ```
 
-**Config file** (`~/.config/ponytail/config.json`, Windows: `%APPDATA%\ponytail\config.json`):
+**設定ファイル**（`~/.config/ponytail/config.json`、Windowsでは `%APPDATA%\ponytail\config.json`）：
+
 ```json
 { "defaultMode": "lite" }
 ```
 
-Set `"off"` to disable auto-activation on session start, activate manually
-with `/ponytail` when wanted.
+`off` にするとセッション開始時の自動有効化を止め、必要なときに `/ponytail` で手動起動できます。
 
-Resolution: env var > config file > `full`.
+解決順序は、環境変数 → 設定ファイル → `full` です。
 
-## Update
+## 更新
 
-Enable auto-update once: open `/plugin`, go to Marketplaces, pick ponytail, Enable auto-update. Claude Code then pulls new versions at startup (run `/reload-plugins` when it prompts). Manual refresh: `/plugin marketplace update ponytail` then `/reload-plugins`.
+Claude Codeでは `/plugin` を開き、MarketplacesからPonytailを選んで自動更新を有効にします。手動更新は `/plugin marketplace update ponytail` の後に `/reload-plugins` です。
 
-If `/plugin` is not recognized, your Claude Code is out of date. Update it (`npm install -g @anthropic-ai/claude-code@latest`, or `brew upgrade claude-code`) and restart. Other hosts use their own update flow.
+`/plugin` が認識されない場合はClaude Codeを更新して再起動してください。他のホストでは各ホストの更新手順を使います。
 
-## More
+## 詳細
 
-Full docs + examples: https://github.com/DietrichGebert/ponytail
+詳細な導入手順と例は、[README](../README.md) と `docs/` を参照してください。
